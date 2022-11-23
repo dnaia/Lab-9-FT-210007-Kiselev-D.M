@@ -1,25 +1,34 @@
 import random
 import logging
+import random
 
-logging.basicConfig(level=logging.INFO, filename='logs_test22_Lab_9_FT_210007_Kiselev_D_M.txt', filemode='w',
+logging.basicConfig(level=logging.INFO, filename='logs_test10_Lab_9_FT_210007_Kiselev_D_M.txt', filemode='w',
                     format="%(asctime)s %(levelname)s %(message)s")
 
 counter1 = 0  # Вспомогательный счетчик
 while counter1 != 1:  # Проверка, чтобы ввели число.
     # | Диалоговый режим с пользователем и обработкой ошибок ввода
     try:
-        number = int(input('Введите положительное число, которое загадывает компьютер: '))
-        logging.info('Вводят число, которое загадывает компьютер')
+        number = int(input('Введите промежуток, в котором компьютер загадает число от 1 до : '))
+        logging.info('Вводят промежуток, в котором компьютер загадает число')
         while number <= 0:  # Проверка, чтобы ввели положительное число
             print("Введите положительное число!")
             logging.warning('Ввели число, меньшее единицы')
-            number = int(input('Введите положительное число, которое загадывает компьютер: '))
+            number = int(input('Введите промежуток, в котором компьютер загадает число от 1 до :  '))
     except ValueError:
         print('Вы ввели не число!\nПробуйте снова\n')
         logging.error('Ввели не число!')
     else:
         counter1 += 1
         logging.info('Ввели корректное число({})'.format(number))
+
+spisok = []  # Список, это промежуток, но пока он пуст
+for i in range(1, number + 1):  # Заполняем мешок бочонками
+    logging.info('Заполняют промежуток числами')
+    spisok.append(i)
+
+randomnum = random.choice(spisok)
+logging.info('Загаданное число({})'.format(randomnum))
 
 counter2 = 0  # Вспомогательный счетчик
 while counter2 != 1:  # Проверка, чтобы ввели число.
@@ -55,18 +64,18 @@ while i != attempt + 1:  # Попытки отгадать число
             counter3 += 1
             logging.info('Ввели корректное предполагаемое число, которое загадал компьютер({})'.format(answer))
 
-    if answer > number:  # Загаданное число меньше введенного значения
+    if answer > randomnum:  # Загаданное число меньше введенного значения
         print('Загаданное число меньше того, чем вы ввели!\n')
         logging.info('Предпологаемое число меньше числа, которое загадал компьютер')
-    elif answer < number:  # Загаданное число больше введенного значения
+    elif answer < randomnum:  # Загаданное число больше введенного значения
         print('Загаданное число больше того, чем вы ввели!\n')
         logging.info('Предпологаемое число больше числа, которое загадал компьютер')
-    elif answer == number:  # Загаданное число равно введенному значению
+    elif answer == randomnum:  # Загаданное число равно введенному значению
         logging.info('Предпологаемое число равно числу, которое загадал компьютер')
-        print('Вы отгадали!\nКомпьютер загадал число:', number)
+        print('Вы отгадали!\nКомпьютер загадал число:', randomnum)
         break
     i += 1
 
 if i == attempt + 1:
-    print('Вы так и не отгадали число!\nКомпьютер загадал число:', number)
+    print('Вы так и не отгадали число!\nКомпьютер загадал число:', randomnum)
     logging.info('Загаданное число не было отгадано')
